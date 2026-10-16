@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[GROUP NAME] · Zen meditation in [TOWN]</title>
+<meta name="description" content="[ONE-SENTENCE DESCRIPTION]">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Colors: navy theme. For olive & gold, swap in:
+     --brand:#3E4A2A; --tint:#EEE8DA; --card:#F7F3EA; --ink:#232A17; --soft:#55594A; */
+  :root {
+    --brand: #1C2152;   /* header, buttons, footer */
+    --tint:  #DCE6F3;   /* soft section background */
+    --card:  #EDF2F9;   /* cards */
+    --paper: #FFFFFF;
+    --ink:   #15193A;
+    --soft:  #4A5068;
+    --gold:  #D9A441;   /* small accents only */
+    --line:  #C9D3E3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font: 18px/1.6 'Figtree', Arial, sans-serif; }
+  h1, h2, blockquote { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; line-height: 1.1; margin: 0 0 .4em; }
+  h1 { font-size: clamp(44px, 9vw, 72px); }
+  h2 { font-size: clamp(36px, 6vw, 48px); }
+  p { margin: 0 0 1em; }
+  a { color: var(--brand); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .25em; font-size: 14px; font-weight: 600; color: var(--soft); margin-bottom: 12px; }
+  .button { display: inline-block; background: var(--brand); color: #fff; text-decoration: none; text-align: center;
+            padding: 15px 32px; border-radius: 999px; font-weight: 600; }
+  .button.light { background: #fff; color: var(--brand); }
+
+  /* Header bar */
+  .bar { background: var(--brand); color: #fff; padding: 22px 0; }
+  .bar .wrap { display: flex; align-items: center; gap: 14px; }
+  .bar img { width: 40px; height: 40px; border-radius: 50%; }
+  .wordmark { text-transform: uppercase; letter-spacing: .3em; font-weight: 600; font-size: 15px; }
+
+  /* Photo hero: the photo sits behind a dark veil so white text stays readable */
+  .hero { background: var(--brand) center / cover no-repeat; color: #fff; text-align: center; }
+  .hero .veil { background: rgba(10, 14, 35, .45); padding: 110px 0 96px; }
+  .hero p { font-size: 20px; max-width: 30em; margin: 0 auto 28px; }
+
+  section { padding: 64px 0; }
+  .tint { background: var(--tint); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-top: 32px; }
+  .row { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .row:last-of-type { border-bottom: 0; }
+  .row strong { display: block; font-size: 21px; color: var(--brand); }
+  .row span { color: var(--soft); }
+  .card .button { display: block; margin-top: 16px; }
+  ul { padding-left: 1.2em; margin: 0 0 1em; }
+  li { margin-bottom: .5em; }
+
+  /* Quote band */
+  .quote { background: var(--brand); color: #fff; text-align: center; }
+  .quote blockquote { font-size: clamp(28px, 5vw, 38px); font-style: italic; }
+  .quote .eyebrow { color: var(--gold); }
+
+  footer { background: var(--brand); color: #C9CFE6; padding: 40px 0; font-size: 15px; }
+  footer a { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <img src="[LOGO, optional, e.g. logo.png]" alt="">
+    <span class="wordmark">[GROUP NAME]</span>
+  </div>
+</div>
+
+<div class="hero" style="background-image:url('[PHOTO OF THE ROOM OR BUILDING, e.g. room.jpg]')">
+  <div class="veil">
+    <div class="wrap">
+      <h1>[GROUP NAME]</h1>
+      <p>[ONE-SENTENCE DESCRIPTION, e.g. A Zen meditation group in Providence. Everyone is welcome, and sitting is free.]</p>
+      <a class="button light" href="#first-visit">Your first visit</a>
+    </div>
+  </div>
+</div>
+
+<section class="tint" id="times">
+  <div class="wrap">
+    <h2>Come sit with us</h2>
+    <p>[TWO SENTENCES ABOUT WHAT YOU OFFER, e.g. We sit together twice a week. Beginners are welcome and no registration is needed.]</p>
+    <div class="card">
+      <p class="eyebrow">When we sit</p>
+      <div class="row"><strong>[DAY · PRACTICE NAME]</strong><span>[START]–[END] · [IN PERSON / ONLINE]</span></div>
+      <div class="row"><strong>[DAY · PRACTICE NAME]</strong><span>[START]–[END] · [IN PERSON / ONLINE]</span></div>
+      <a class="button" href="#first-visit">Your first visit</a>
+    </div>
+  </div>
+</section>
+
+<section id="first-visit">
+  <div class="wrap">
+    <p class="eyebrow">New to Zen?</p>
+    <h2>Your first visit</h2>
+    <p>No experience needed, and you don't have to be Buddhist. Everyone is welcome.</p>
+    <ul>
+      <li>[ARRIVE TIME, e.g. Come 10 minutes early. Someone will show you how to sit.]</li>
+      <li>[WHAT TO WEAR, e.g. Comfortable clothes in muted colors.]</li>
+      <li>[WHAT HAPPENS, e.g. We chant for 10 minutes, sit for 25, walk for 5, then sit again.]</li>
+      <li>[AFTER, e.g. Stay for tea and questions afterward.]</li>
+    </ul>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="wrap">
+    <blockquote>“[A SHORT TEACHING QUOTE, or remove this section]”</blockquote>
+    <p class="eyebrow">[WHO SAID IT]</p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <p class="eyebrow">About us</p>
+    <h2>[WHO YOU ARE, e.g. A small sangha since 1998]</h2>
+    <p>[A FEW SENTENCES ABOUT THE GROUP.] We are part of the <a href="https://kwanumzen.org">Kwan Um School of Zen</a>, founded by Zen Master Seung Sahn.</p>
+    <p>[TEACHER, e.g. Our guiding teacher is ...]</p>
+  </div>
+</section>
+
+<section class="tint" id="find-us">
+  <div class="wrap">
+    <p class="eyebrow">Find us</p>
+    <h2>[ADDRESS LINE 1]</h2>
+    <p>[CITY, STATE ZIP]<br>[WHICH DOOR, WHERE TO PARK]</p>
+    <p><a href="https://maps.google.com/?q=[ADDRESS]">Open in Google Maps</a></p>
+    <p><strong>Cost:</strong> [COST, e.g. Sitting is free. Donations help pay the rent, and no one is turned away.]</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="eyebrow">Questions?</p>
+    <h2>Say hello</h2>
+    <p>[CONTACT NAME] will get back to you within two days.</p>
+    <a class="button" href="mailto:[EMAIL]">Email us</a>
+    <p style="margin-top:16px">[PHONE, optional]</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>[GROUP NAME] · [ADDRESS] · A member of the <a href="https://kwanumzen.org">Kwan Um School of Zen</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

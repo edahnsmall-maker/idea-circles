@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website prompt · Build your sangha's website</title>
+<meta name="description" content="Copy one prompt into Claude or ChatGPT to build a one-page website for your Kwan Um sitting group.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .prompt { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin-top: 18px;
+            max-height: 420px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere;
+            font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--ink); }
+  .steps { padding-left: 1.2em; }
+  .steps li { margin-bottom: .5em; }
+  #copied { text-align: center; font-weight: 600; color: var(--brand); margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap"><span class="dot" aria-hidden="true"></span><span class="wordmark">Build your website</span></div></div>
+<main class="wrap">
+  <p class="eyebrow">Dharma Teacher Weekend 2026</p>
+  <h1>One prompt, one page</h1>
+  <p class="lead">Copy this prompt into <a href="https://claude.ai">Claude</a> or <a href="https://chatgpt.com">ChatGPT</a>. It finds your group online, asks only for what’s missing, and builds your page.</p>
+  <ol class="steps">
+    <li>Tap <b>Copy prompt</b>, then paste it into a new chat and send. Turn on web search if your AI asks.</li>
+    <li>Answer its questions. Upload a logo or photos if you have them.</li>
+    <li>Save the file it gives you as <b>index.html</b>.</li>
+    <li>Drag the file, or its folder if you have separate photos, onto <a href="https://vercel.com/drop">vercel.com/drop</a>. Your site is live.</li>
+  </ol>
+  <button class="button" type="button" id="copy" disabled>Loading prompt…</button>
+  <p id="copied" role="status" aria-live="polite"></p>
+  <pre class="prompt" id="prompt" tabindex="0" aria-label="The full prompt">Loading…</pre>
+</main>
+<footer>Kwan Um School of Zen · Dharma Teacher Weekend 2026</footer>
+<script>
+(function () {
+  var pre = document.getElementById('prompt');
+  var btn = document.getElementById('copy');
+  var status = document.getElementById('copied');
+  var text = '';
+  Promise.all([
+    fetch('website-prompt-intro.txt', { cache: 'no-store' }).then(function (r) { return r.text(); }),
+    fetch('website-template.html', { cache: 'no-store' }).then(function (r) { return r.text(); })
+  ]).then(function (parts) {
+    text = parts[0].replace(/\s+$/, '') + '\n\n' + parts[1];
+    pre.textContent = text;
+    btn.disabled = false;
+    btn.textContent = 'Copy prompt';
+  }).catch(function () {
+    pre.textContent = 'The prompt couldn’t load. Please refresh the page.';
+    btn.textContent = 'Copy prompt';
+  });
+
+  function fallbackCopy() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  btn.addEventListener('click', function () {
+    if (!text) return;
+    var done = function () { status.textContent = 'Copied. Paste it into a new chat.'; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy prompt'; }, 2500); };
+    var fail = function () {
+      if (fallbackCopy()) return done();
+      status.textContent = 'Couldn’t copy automatically. Select the text below and copy it.';
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fail);
+    else fail();
+  });
+})();
+</script>
+</body>
+</html>

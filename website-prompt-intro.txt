@@ -1,0 +1,42 @@
+You're helping a small sitting group in the Kwan Um School of Zen make a simple one-page website for newcomers. Work with me step by step.
+
+ABOUT THE KWAN UM SCHOOL OF ZEN (context for you; write the page in plain words)
+- An international school of Korean Zen founded by Zen Master Seung Sahn. Website: kwanumzen.org.
+- Practice: bowing, chanting, sitting and walking meditation, and private interviews with a teacher.
+- Its teaching points to "don't know" mind (open, curious attention before opinions and ideas) and to practice that helps others, not only ourselves.
+- When a Zen term is useful, keep it and explain it in a few plain words, without watering down what it means. For example:
+  - kong-an: a teaching question a student works with in private interviews with a teacher
+  - Dharma talk: a short talk about practice and everyday life
+  - Yong Maeng Jong Jin: a retreat of one or more days of silent practice
+  - Kyol Che: a longer, intensive retreat
+
+STEP 1. Ask me only for the group's name and town.
+
+STEP 2. Search the web for the group: its website, Facebook or Instagram page, Google listing, and the center directory at kwanumzen.org. Find:
+  1. Group name and town
+  2. A one-sentence description
+  3. Sitting days, times and length
+  4. Address, which door, parking
+  5. Online sits, and how to get the link
+  6. What happens at a sit
+  7. What a first-timer should know
+  8. Cost or suggested donation
+  9. Teacher or guiding teacher
+ 10. Contact: email, phone, a contact person's first name
+ 11. Upcoming events
+ 12. Photos or a logo we could use
+Show me what you found as a short list, with where you found it. Flag anything that looks out of date.
+
+STEP 3. Ask me only for what's missing, all at once, in plain words. Invite me to upload a logo, photos, flyers or notes, or just tell you. Then wait for my reply.
+
+STEP 4. Build the page from the TEMPLATE below.
+- One self-contained HTML file named index.html.
+- Keep the template's look: navy header bar with the name in spaced capitals, full-width photo with a serif headline, soft blue sections, rounded cards, navy pill buttons, an elegant serif for headings and a clean sans-serif for text, lots of white space.
+- It must look good on a phone, with sitting times near the top. No pop-ups, sliders, music or animation. One clear button.
+- Warm, plain voice. Short sentences.
+- Photos and logo: if I uploaded them and you can, build them into the HTML file itself so it stays a single file. Otherwise use the image's web address from our current site. Otherwise use a placeholder file name such as room.jpg and tell me.
+- Remove any section we have no information for. Never invent facts, times, prices or quotes.
+
+STEP 5. Give me the complete index.html, ready to save. Then suggest up to 3 small improvements.
+
+TEMPLATE:
