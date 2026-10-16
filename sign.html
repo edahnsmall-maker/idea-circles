@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Idea Circles signs · print</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: letter; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #E8ECF4; font-family: 'Figtree', Arial, sans-serif; color: #15193A; }
+  .sheet { width: 8.5in; height: 11in; margin: 24px auto; background: #fff; display: flex; flex-direction: column;
+           align-items: center; text-align: center; overflow: hidden; break-after: page; }
+  .top { width: 100%; background: #1C2152; color: #fff; padding: .55in .6in .5in; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .3em; font-size: 14pt; font-weight: 600; color: #D9A441; margin: 0 0 .15in; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 54pt; line-height: 1; margin: 0; }
+  .body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: .4in .7in .6in; gap: .25in; }
+  h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 36pt; line-height: 1.1; margin: 0; }
+  p { font-size: 17pt; line-height: 1.4; margin: 0; color: #4A5068; max-width: 6in; }
+  img { width: 3.6in; height: 3.6in; }
+  .url { font-size: 13pt; color: #1C2152; font-weight: 600; }
+  @media print { body { background: #fff; } .sheet { margin: 0; } }
+</style>
+</head>
+<body>
+
+<section class="sheet">
+  <div class="top">
+    <p class="eyebrow">Idea Circles</p>
+    <h1>Keep the Dharma Alive</h1>
+  </div>
+  <div class="body">
+    <h2>Got an idea from this weekend?</h2>
+    <p>Scan to share it. Lead it, help with it, or just pass it along.</p>
+    <img src="qr-idea.svg" alt="QR code to share an idea">
+    <p class="url">edahnsmall-maker.github.io/idea-circles</p>
+    <p>On Sunday after the closing circle, join the ideas that move you.</p>
+  </div>
+</section>
+
+<section class="sheet">
+  <div class="top">
+    <p class="eyebrow">Idea Circles</p>
+    <h1>Keep the Dharma Alive</h1>
+  </div>
+  <div class="body">
+    <h2>Join an idea circle</h2>
+    <p>Here are this weekend’s ideas. Scan, pick the ones you care about, and we’ll start a small conversation for each.</p>
+    <img src="qr-join.svg" alt="QR code to join an idea circle">
+    <p class="url">edahnsmall-maker.github.io/idea-circles/join.html</p>
+    <p>No commitment. Joining just means you’d like to be part of the conversation.</p>
+  </div>
+</section>
+
+</body>
+</html>

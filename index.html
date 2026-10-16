@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share an idea · Keep the Dharma Alive</title>
+<meta name="description" content="Share an idea from Dharma Teacher Weekend 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bar"><div class="wrap"><span class="dot" aria-hidden="true"></span><span class="wordmark">Idea Circles</span></div></div>
+
+<main class="wrap">
+  <div id="form-view">
+    <p class="eyebrow">Dharma Teacher Weekend 2026</p>
+    <h1>Keep the Dharma Alive</h1>
+    <p class="lead">Did something this weekend spark an idea? Share it here. On Sunday we’ll gather everyone’s ideas, and you can join the ones that move you.</p>
+
+    <form id="idea-form" class="card" novalidate>
+      <label for="idea">Your idea <span class="hint">· a sentence or two</span></label>
+      <textarea id="idea" name="idea" maxlength="2000" required placeholder="e.g. Pair small sitting groups with a larger center for monthly joint sits."></textarea>
+
+      <fieldset>
+        <legend>Would you like to help with it?</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="role" value="lead"><span>Lead it</span></label>
+          <label class="choice"><input type="radio" name="role" value="co-lead"><span>Co-lead it</span></label>
+          <label class="choice"><input type="radio" name="role" value="committee"><span>Be on a committee</span></label>
+          <label class="choice"><input type="radio" name="role" value="none" checked><span>Just sharing</span></label>
+        </div>
+      </fieldset>
+
+      <div id="contact">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" maxlength="200" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="hint" id="email-hint">· optional</span></label>
+          <input type="email" id="email" name="email" maxlength="320" autocomplete="email" inputmode="email">
+        </div>
+      </div>
+
+      <div class="honey" aria-hidden="true">
+        <label for="website">Leave this empty</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <p class="error" id="error" role="alert" hidden></p>
+      <button class="button" type="submit" id="submit">Share my idea</button>
+    </form>
+  </div>
+
+  <div id="thanks-view" class="card thanks" hidden>
+    <div class="mark" aria-hidden="true"></div>
+    <h2>Thank you</h2>
+    <p>Your idea is in. On Sunday after the closing circle, we’ll share everyone’s ideas and you can sign up for the ones you care about.</p>
+    <button class="button secondary" type="button" id="another">Share another idea</button>
+  </div>
+</main>
+
+<footer>Kwan Um School of Zen · Dharma Teacher Weekend 2026</footer>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script>
+(function () {
+  var form = document.getElementById('idea-form');
+  var errorEl = document.getElementById('error');
+  var submitBtn = document.getElementById('submit');
+  var emailHint = document.getElementById('email-hint');
+
+  function role() {
+    var picked = form.querySelector('input[name=role]:checked');
+    return picked ? picked.value : 'none';
+  }
+  function updateHint() {
+    emailHint.textContent = role() === 'none' ? '· optional' : '· needed so we can follow up';
+  }
+  form.addEventListener('change', updateHint);
+  updateHint();
+
+  function showError(msg) { errorEl.textContent = msg; errorEl.hidden = false; }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    errorEl.hidden = true;
+    if (form.elements.website.value) return; // a bot filled the hidden field
+
+    var idea = form.elements.idea.value.trim();
+    var r = role();
+    var name = form.elements.name.value.trim();
+    var email = form.elements.email.value.trim();
+
+    if (idea.length < 3) { showError('Please write your idea first.'); form.elements.idea.focus(); return; }
+    if (r !== 'none' && !email) { showError('Please add your email so we can follow up.'); form.elements.email.focus(); return; }
+    if (email && !IC.looksLikeEmail(email)) { showError('That email doesn’t look quite right.'); form.elements.email.focus(); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving…';
+    try {
+      await IC.insert('ic_ideas', [{ idea: idea, role: r, name: name || null, email: email || null }]);
+      document.getElementById('form-view').hidden = true;
+      document.getElementById('thanks-view').hidden = false;
+      window.scrollTo(0, 0);
+    } catch (err) {
+      showError(err.message === 'not-configured'
+        ? 'This page isn’t connected to its database yet.'
+        : 'We couldn’t save that. Check your connection and try again. Your idea is still here.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Share my idea';
+    }
+  });
+
+  document.getElementById('another').addEventListener('click', function () {
+    form.elements.idea.value = '';
+    document.getElementById('thanks-view').hidden = true;
+    document.getElementById('form-view').hidden = false;
+    form.elements.idea.focus();
+  });
+})();
+</script>
+</body>
+</html>

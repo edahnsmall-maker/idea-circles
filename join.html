@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join an idea circle · Keep the Dharma Alive</title>
+<meta name="description" content="Sign up for the ideas from Dharma Teacher Weekend 2026 that you want to help shape.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bar"><div class="wrap"><span class="dot" aria-hidden="true"></span><span class="wordmark">Idea Circles</span></div></div>
+
+<main class="wrap">
+  <div id="form-view">
+    <p class="eyebrow">Dharma Teacher Weekend 2026</p>
+    <h1>Join an idea circle</h1>
+    <p class="lead">Here are the ideas from this weekend, gathered and combined. Pick any you’d like to help shape. Joining just means you’d like to be part of the conversation.</p>
+
+    <form id="join-form" class="card" novalidate>
+      <div id="ideas"><p class="hint" id="loading">Loading ideas…</p></div>
+
+      <div id="contact-fields" hidden>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" maxlength="200" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="hint">· so the circle can reach you</span></label>
+          <input type="email" id="email" name="email" maxlength="320" autocomplete="email" inputmode="email" required>
+        </div>
+        <div class="honey" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <p class="error" id="error" role="alert" hidden></p>
+        <button class="button" type="submit" id="submit">Join these circles</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="thanks-view" class="card thanks" hidden>
+    <div class="mark" aria-hidden="true"></div>
+    <h2>You’re in</h2>
+    <p id="thanks-text">We’ll start an email thread for each circle in the coming week.</p>
+  </div>
+</main>
+
+<footer>Kwan Um School of Zen · Dharma Teacher Weekend 2026</footer>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script>
+(function () {
+  var form = document.getElementById('join-form');
+  var list = document.getElementById('ideas');
+  var errorEl = document.getElementById('error');
+  var submitBtn = document.getElementById('submit');
+  var ideas = [];
+
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function render() {
+    list.textContent = '';
+    if (!ideas.length) {
+      list.appendChild(el('p', { class: 'hint' }, 'The ideas will appear here on Sunday after the closing circle. Check back then.'));
+      return;
+    }
+    ideas.forEach(function (idea, i) {
+      var box = el('fieldset', { class: 'idea' });
+      var legendId = 'idea-title-' + i;
+      var title = el('h3', { id: legendId }, idea.title);
+      box.setAttribute('aria-labelledby', legendId);
+      box.appendChild(title);
+      if (idea.summary) box.appendChild(el('p', {}, idea.summary));
+      var choices = el('div', { class: 'choices' });
+      [['lead', 'Lead'], ['co-lead', 'Co-lead'], ['join', 'Join'], ['skip', 'Skip']].forEach(function (c) {
+        var lab = el('label', { class: 'choice' });
+        var input = el('input', { type: 'radio', name: 'idea-' + i, value: c[0] });
+        if (c[0] === 'skip') input.checked = true;
+        lab.appendChild(input);
+        lab.appendChild(el('span', {}, c[1]));
+        choices.appendChild(lab);
+      });
+      box.appendChild(choices);
+      list.appendChild(box);
+    });
+    document.getElementById('contact-fields').hidden = false;
+  }
+
+  fetch('ideas.json', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { ideas = (data && data.ideas) || []; render(); })
+    .catch(function () { list.textContent = ''; list.appendChild(el('p', { class: 'error' }, 'The ideas couldn’t load. Please refresh the page.')); });
+
+  function showError(msg) { errorEl.textContent = msg; errorEl.hidden = false; }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    errorEl.hidden = true;
+    if (form.elements.website.value) return;
+
+    var name = form.elements.name.value.trim();
+    var email = form.elements.email.value.trim();
+    var rows = [];
+    ideas.forEach(function (idea, i) {
+      var picked = form.querySelector('input[name="idea-' + i + '"]:checked');
+      if (picked && picked.value !== 'skip') {
+        rows.push({ idea_id: String(idea.id), idea_title: idea.title, choice: picked.value, name: name, email: email });
+      }
+    });
+
+    if (!rows.length) { showError('Pick at least one idea to join.'); return; }
+    if (!name) { showError('Please add your name.'); form.elements.name.focus(); return; }
+    if (!IC.looksLikeEmail(email)) { showError('Please add a working email.'); form.elements.email.focus(); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving…';
+    try {
+      await IC.insert('ic_signups', rows);
+      document.getElementById('thanks-text').textContent =
+        'You joined ' + rows.length + (rows.length === 1 ? ' circle' : ' circles') +
+        '. We’ll start an email thread for each one in the coming week.';
+      document.getElementById('form-view').hidden = true;
+      document.getElementById('thanks-view').hidden = false;
+      window.scrollTo(0, 0);
+    } catch (err) {
+      showError(err.message === 'not-configured'
+        ? 'This page isn’t connected to its database yet.'
+        : 'We couldn’t save that. Check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Join these circles';
+    }
+  });
+})();
+</script>
+</body>
+</html>
