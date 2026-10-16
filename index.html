@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Share an idea · Keep the Dharma Alive</title>
-<meta name="description" content="Share an idea from Dharma Teacher Weekend 2026.">
+<title>Idea Circles · Keep the Dharma Alive</title>
+<meta name="description" content="Share an idea from Dharma Teacher Weekend 2026, and like or join everyone else's.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -13,26 +13,33 @@
 <div class="bar"><div class="wrap"><span class="dot" aria-hidden="true"></span><span class="wordmark">Idea Circles</span></div></div>
 
 <main class="wrap">
-  <div id="form-view">
-    <p class="eyebrow">Dharma Teacher Weekend 2026</p>
-    <h1>Keep the Dharma Alive</h1>
-    <p class="lead">Did something this weekend spark an idea? Share it here. On Sunday we’ll gather everyone’s ideas, and you can join the ones that move you.</p>
+  <p class="eyebrow">Dharma Teacher Weekend 2026</p>
+  <h1>Keep the Dharma Alive</h1>
 
-    <form id="idea-form" class="card" novalidate>
-      <label for="idea">Your idea <span class="hint">· a sentence or two</span></label>
-      <textarea id="idea" name="idea" maxlength="2000" required placeholder="e.g. Pair small sitting groups with a larger center for monthly joint sits."></textarea>
+  <div class="tabs" role="tablist" aria-label="Idea Circles">
+    <button type="button" role="tab" id="tab-share" aria-controls="panel-share" aria-selected="true">Share an idea</button>
+    <button type="button" role="tab" id="tab-ideas" aria-controls="panel-ideas" aria-selected="false" tabindex="-1">See ideas <span id="idea-count"></span></button>
+  </div>
 
-      <fieldset>
-        <legend>Would you like to help with it?</legend>
-        <div class="choices">
-          <label class="choice"><input type="radio" name="role" value="lead"><span>Lead it</span></label>
-          <label class="choice"><input type="radio" name="role" value="co-lead"><span>Co-lead it</span></label>
-          <label class="choice"><input type="radio" name="role" value="committee"><span>Be on a committee</span></label>
-          <label class="choice"><input type="radio" name="role" value="none" checked><span>Just sharing</span></label>
-        </div>
-      </fieldset>
+  <!-- Share -->
+  <section id="panel-share" role="tabpanel" aria-labelledby="tab-share">
+    <div id="form-view">
+      <p class="lead">Did something this weekend spark an idea? Share it here, then like or join the ideas that move you.</p>
 
-      <div id="contact">
+      <form id="idea-form" class="card" novalidate>
+        <label for="idea">Your idea <span class="hint">· a sentence or two</span></label>
+        <textarea id="idea" name="idea" maxlength="2000" required placeholder="e.g. Pair small sitting groups with a larger center for monthly joint sits."></textarea>
+
+        <fieldset>
+          <legend>Would you like to help with it?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="role" value="lead"><span>Lead it</span></label>
+            <label class="choice"><input type="radio" name="role" value="co-lead"><span>Co-lead it</span></label>
+            <label class="choice"><input type="radio" name="role" value="committee"><span>Be on a committee</span></label>
+            <label class="choice"><input type="radio" name="role" value="none" checked><span>Just sharing</span></label>
+          </div>
+        </fieldset>
+
         <div class="field">
           <label for="name">Your name</label>
           <input type="text" id="name" name="name" maxlength="200" autocomplete="name">
@@ -41,24 +48,37 @@
           <label for="email">Email <span class="hint" id="email-hint">· optional</span></label>
           <input type="email" id="email" name="email" maxlength="320" autocomplete="email" inputmode="email">
         </div>
-      </div>
+        <p class="hint small">Your idea will appear in the list without your name. Your name and email are only seen by the organizers.</p>
 
-      <div class="honey" aria-hidden="true">
-        <label for="website">Leave this empty</label>
-        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-      </div>
+        <div class="honey" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
 
-      <p class="error" id="error" role="alert" hidden></p>
-      <button class="button" type="submit" id="submit">Share my idea</button>
-    </form>
-  </div>
+        <p class="error" id="error" role="alert" hidden></p>
+        <button class="button" type="submit" id="submit">Share my idea</button>
+      </form>
+    </div>
 
-  <div id="thanks-view" class="card thanks" hidden>
-    <div class="mark" aria-hidden="true"></div>
-    <h2>Thank you</h2>
-    <p>Your idea is in. On Sunday after the closing circle, we’ll share everyone’s ideas and you can sign up for the ones you care about.</p>
-    <button class="button secondary" type="button" id="another">Share another idea</button>
-  </div>
+    <div id="thanks-view" class="card thanks" hidden>
+      <div class="mark" aria-hidden="true"></div>
+      <h2>Thank you</h2>
+      <p>Your idea is in. See it alongside everyone else’s, and like or join the ones you care about.</p>
+      <button class="button" type="button" id="go-ideas">See all ideas</button>
+      <button class="button secondary" type="button" id="another">Share another idea</button>
+    </div>
+  </section>
+
+  <!-- Ideas -->
+  <section id="panel-ideas" role="tabpanel" aria-labelledby="tab-ideas" hidden>
+    <p class="lead">Like an idea to show support. Join it if you’d like to be part of the conversation; we’ll put the people who join each idea in touch.</p>
+    <div class="sort" role="group" aria-label="Sort ideas">
+      <button type="button" class="pill" id="sort-new" aria-pressed="true">Newest</button>
+      <button type="button" class="pill" id="sort-top" aria-pressed="false">Most support</button>
+    </div>
+    <p class="error" id="list-error" role="alert" hidden></p>
+    <div id="ideas-list" aria-live="polite"><p class="hint">Loading ideas…</p></div>
+  </section>
 </main>
 
 <footer>Kwan Um School of Zen · Dharma Teacher Weekend 2026</footer>
@@ -67,10 +87,44 @@
 <script src="api.js"></script>
 <script>
 (function () {
+  // ---------- Tabs ----------
+  var tabShare = document.getElementById('tab-share');
+  var tabIdeas = document.getElementById('tab-ideas');
+  var panelShare = document.getElementById('panel-share');
+  var panelIdeas = document.getElementById('panel-ideas');
+
+  function showTab(which, focus) {
+    var ideas = which === 'ideas';
+    tabShare.setAttribute('aria-selected', String(!ideas));
+    tabIdeas.setAttribute('aria-selected', String(ideas));
+    tabShare.tabIndex = ideas ? -1 : 0;
+    tabIdeas.tabIndex = ideas ? 0 : -1;
+    panelShare.hidden = ideas;
+    panelIdeas.hidden = !ideas;
+    if (focus) (ideas ? tabIdeas : tabShare).focus();
+    if (ideas) loadIdeas();
+    try { history.replaceState(null, '', ideas ? '#ideas' : '#'); } catch (e) {}
+  }
+  tabShare.addEventListener('click', function () { showTab('share'); });
+  tabIdeas.addEventListener('click', function () { showTab('ideas'); });
+  [tabShare, tabIdeas].forEach(function (t) {
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        showTab(t === tabShare ? 'ideas' : 'share', true);
+      }
+    });
+  });
+
+  // ---------- Share form ----------
   var form = document.getElementById('idea-form');
+  var f = form.elements;
   var errorEl = document.getElementById('error');
   var submitBtn = document.getElementById('submit');
   var emailHint = document.getElementById('email-hint');
+  var me = IC.recall('me', { name: '', email: '' });
+  f.name.value = me.name || '';
+  f.email.value = me.email || '';
 
   function role() {
     var picked = form.querySelector('input[name=role]:checked');
@@ -82,31 +136,33 @@
   form.addEventListener('change', updateHint);
   updateHint();
 
-  function showError(msg) { errorEl.textContent = msg; errorEl.hidden = false; }
+  function showError(el, msg) { el.textContent = msg; el.hidden = false; }
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     errorEl.hidden = true;
-    if (form.elements.website.value) return; // a bot filled the hidden field
+    if (f.website.value) return; // a bot filled the hidden field
 
-    var idea = form.elements.idea.value.trim();
+    var idea = f.idea.value.trim();
     var r = role();
-    var name = form.elements.name.value.trim();
-    var email = form.elements.email.value.trim();
+    var name = f.name.value.trim();
+    var email = f.email.value.trim();
 
-    if (idea.length < 3) { showError('Please write your idea first.'); form.elements.idea.focus(); return; }
-    if (r !== 'none' && !email) { showError('Please add your email so we can follow up.'); form.elements.email.focus(); return; }
-    if (email && !IC.looksLikeEmail(email)) { showError('That email doesn’t look quite right.'); form.elements.email.focus(); return; }
+    if (idea.length < 3) { showError(errorEl, 'Please write your idea first.'); f.idea.focus(); return; }
+    if (r !== 'none' && !email) { showError(errorEl, 'Please add your email so we can follow up.'); f.email.focus(); return; }
+    if (email && !IC.looksLikeEmail(email)) { showError(errorEl, 'That email doesn’t look quite right.'); f.email.focus(); return; }
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Saving…';
     try {
       await IC.insert('ic_ideas', [{ idea: idea, role: r, name: name || null, email: email || null }]);
+      if (name || email) { me = { name: name, email: email }; IC.remember('me', me); }
       document.getElementById('form-view').hidden = true;
       document.getElementById('thanks-view').hidden = false;
       window.scrollTo(0, 0);
+      loaded = false; // the list should include the new idea
     } catch (err) {
-      showError(err.message === 'not-configured'
+      showError(errorEl, err.message === 'not-configured'
         ? 'This page isn’t connected to its database yet.'
         : 'We couldn’t save that. Check your connection and try again. Your idea is still here.');
     } finally {
@@ -116,11 +172,144 @@
   });
 
   document.getElementById('another').addEventListener('click', function () {
-    form.elements.idea.value = '';
+    f.idea.value = '';
     document.getElementById('thanks-view').hidden = true;
     document.getElementById('form-view').hidden = false;
-    form.elements.idea.focus();
+    f.idea.focus();
   });
+  document.getElementById('go-ideas').addEventListener('click', function () { showTab('ideas', true); });
+
+  // ---------- Ideas list ----------
+  var list = document.getElementById('ideas-list');
+  var listError = document.getElementById('list-error');
+  var countEl = document.getElementById('idea-count');
+  var ideas = [];
+  var sortBy = 'new';
+  var loaded = false;
+  var liked = IC.recall('liked', {});
+  var joined = IC.recall('joined', {});
+  var openJoin = null;
+
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+  async function loadIdeas(quiet) {
+    try {
+      var rows = await IC.select('ic_ideas_public?select=id,created_at,idea,likes,joins&order=created_at.desc');
+      ideas = rows.map(function (r) { return { id: r.id, at: r.created_at, idea: r.idea, likes: +r.likes || 0, joins: +r.joins || 0 }; });
+      loaded = true;
+      listError.hidden = true;
+      countEl.textContent = '(' + ideas.length + ')';
+      render();
+    } catch (err) {
+      if (!quiet) {
+        list.textContent = '';
+        showError(listError, err.message === 'not-configured'
+          ? 'This page isn’t connected to its database yet.'
+          : 'The ideas couldn’t load. Check your connection and try again.');
+      }
+    }
+  }
+
+  function sorted() {
+    var copy = ideas.slice();
+    if (sortBy === 'top') copy.sort(function (a, b) { return (b.likes + b.joins * 2) - (a.likes + a.joins * 2) || (a.at < b.at ? 1 : -1); });
+    return copy;
+  }
+
+  function render() {
+    list.textContent = '';
+    if (!ideas.length) {
+      list.appendChild(el('p', { class: 'hint' }, 'No ideas yet. Be the first to share one.'));
+      return;
+    }
+    sorted().forEach(function (it) { list.appendChild(card(it)); });
+  }
+
+  function card(it) {
+    var c = el('article', { class: 'idea-card' });
+    c.appendChild(el('p', { class: 'idea-text' }, it.idea));
+    c.appendChild(el('p', { class: 'idea-meta' }, plural(it.likes, 'like', 'likes') + ' · ' + plural(it.joins, 'person joined', 'people joined')));
+
+    var actions = el('div', { class: 'idea-actions' });
+    var likeBtn = el('button', { type: 'button', class: 'pill', 'aria-pressed': liked[it.id] ? 'true' : 'false' }, liked[it.id] ? 'Liked' : 'Like');
+    if (liked[it.id]) likeBtn.disabled = true;
+    likeBtn.addEventListener('click', function () { like(it, likeBtn); });
+    actions.appendChild(likeBtn);
+
+    var joinBtn = el('button', { type: 'button', class: 'pill strong', 'aria-expanded': openJoin === it.id ? 'true' : 'false' }, joined[it.id] ? 'Joined' : 'Join');
+    if (joined[it.id]) { joinBtn.disabled = true; joinBtn.setAttribute('aria-pressed', 'true'); }
+    joinBtn.addEventListener('click', function () { openJoin = openJoin === it.id ? null : it.id; render(); });
+    actions.appendChild(joinBtn);
+    c.appendChild(actions);
+
+    if (openJoin === it.id && !joined[it.id]) c.appendChild(joinBox(it));
+    return c;
+  }
+
+  function joinBox(it) {
+    var box = el('form', { class: 'join-box', novalidate: '' });
+    var nid = 'jn-' + it.id, eid = 'je-' + it.id;
+    box.appendChild(el('p', { class: 'hint small' }, 'Leave your name and email. We’ll connect everyone who joins this idea after the weekend.'));
+    var l1 = el('label', { for: nid }, 'Your name'); var i1 = el('input', { type: 'text', id: nid, maxlength: '200', autocomplete: 'name' }); i1.value = me.name || '';
+    var l2 = el('label', { for: eid }, 'Email'); var i2 = el('input', { type: 'email', id: eid, maxlength: '320', autocomplete: 'email', inputmode: 'email' }); i2.value = me.email || '';
+    var err = el('p', { class: 'error', role: 'alert' }); err.hidden = true;
+    var go = el('button', { type: 'submit', class: 'button' }, 'Join this idea');
+    [l1, i1, l2, i2, err, go].forEach(function (n) { box.appendChild(n); });
+    box.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var name = i1.value.trim(), email = i2.value.trim();
+      if (!name) { showError(err, 'Please add your name.'); i1.focus(); return; }
+      if (!IC.looksLikeEmail(email)) { showError(err, 'Please add a working email.'); i2.focus(); return; }
+      go.disabled = true; go.textContent = 'Saving…';
+      try {
+        await IC.insert('ic_reactions', [{ idea_id: it.id, kind: 'join', name: name, email: email }]);
+        me = { name: name, email: email }; IC.remember('me', me);
+        joined[it.id] = true; IC.remember('joined', joined);
+        it.joins += 1; openJoin = null; render();
+      } catch (x) {
+        showError(err, 'We couldn’t save that. Check your connection and try again.');
+        go.disabled = false; go.textContent = 'Join this idea';
+      }
+    });
+    setTimeout(function () { (i1.value ? i2 : i1).focus(); }, 0);
+    return box;
+  }
+
+  async function like(it, btn) {
+    btn.disabled = true;
+    liked[it.id] = true; it.likes += 1; render(); // show it right away
+    try {
+      await IC.insert('ic_reactions', [{ idea_id: it.id, kind: 'like' }]);
+      IC.remember('liked', liked);
+    } catch (x) {
+      delete liked[it.id]; it.likes -= 1; render();
+      showError(listError, 'That like didn’t save. Check your connection and try again.');
+    }
+  }
+
+  function setSort(which) {
+    sortBy = which;
+    document.getElementById('sort-new').setAttribute('aria-pressed', String(which === 'new'));
+    document.getElementById('sort-top').setAttribute('aria-pressed', String(which === 'top'));
+    render();
+  }
+  document.getElementById('sort-new').addEventListener('click', function () { setSort('new'); });
+  document.getElementById('sort-top').addEventListener('click', function () { setSort('top'); });
+
+  // Keep the list fresh while it's open, without interrupting someone mid-join.
+  setInterval(function () {
+    if (!panelIdeas.hidden && !document.hidden && openJoin === null) loadIdeas(true);
+  }, 30000);
+
+  // Count on the tab, and open the Ideas tab directly from a #ideas link.
+  loadIdeas(true);
+  if (location.hash === '#ideas') showTab('ideas');
 })();
 </script>
 </body>
