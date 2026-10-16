@@ -35,10 +35,13 @@ create or replace view ic_ideas_public as
          i.created_at,
          i.idea,
          count(r.id) filter (where r.kind = 'like') as likes,
-         count(r.id) filter (where r.kind = 'join') as joins
+         -- Whoever shared the idea and offered to lead, co-lead or be on a
+         -- committee counts as having joined it.
+         count(r.id) filter (where r.kind = 'join')
+           + (case when i.role in ('lead', 'co-lead', 'committee') then 1 else 0 end) as joins
   from ic_ideas i
   left join ic_reactions r on r.idea_id = i.id
   where not i.hidden
-  group by i.id;
+  group by i.id, i.created_at, i.idea, i.role;
 
 grant select on ic_ideas_public to anon;
